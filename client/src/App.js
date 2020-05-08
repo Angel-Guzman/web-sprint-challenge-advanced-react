@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+// import light mode custom hook
+import { useLightMode } from './hooks/useLightMode';
 
 import PlantList from "./components/PlantList";
 import ShoppingCart from "./components/ShoppingCart";
@@ -8,6 +10,16 @@ import CheckoutForm from "./components/CheckoutForm";
 import "./App.css";
 
 function App() {
+
+  // light mode custom hook
+  const [lightMode, setLightMode] = useLightMode(false);
+
+  // toggle handler
+  const toggleMode = e => {
+    e.preventDefault();
+    setLightMode(!lightMode);
+  };
+
   // array of plants that have been added to the cart
   const [cart, setCart] = useState([]);
 
@@ -28,6 +40,7 @@ function App() {
           <h1>
             React Plants <span role="img">🌿</span>
           </h1>
+          <button onClick={toggleMode} className={lightMode ? 'toggle toggled' : 'toggle'}>Light</button>
           <ul className="steps">
             <li>
               <NavLink exact to="/">
